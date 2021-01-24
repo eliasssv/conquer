@@ -1,13 +1,9 @@
-package com.conquer.Service;
+package com.conquer.service;
 
-import com.conquer.DTO.RelatorioCidadeGastoDTO;
-import org.springframework.stereotype.Service;
+import com.conquer.dto.RelatorioCidadeGastoDTO;
 
-@Service
-public class RelatorioCidadeGastoService {
+public interface RelatorioCidadeGastoService {
 
-    public RelatorioCidadeGastoDTO getRelatorioCidadeGastoService(String mesAnoInicial, String mesAnoFinal) {
-        //TODO
-        return null;
-    }
+    RelatorioCidadeGastoDTO getRelatorioCidadeGasto(String anoMesInicial, String anoMesFinal);
+
 }

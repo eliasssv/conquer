@@ -1,26 +1,24 @@
-package com.conquer.Controller;
+package com.conquer.controller;
 
-import com.conquer.DTO.RelatorioCidadeGastoDTO;
-import com.conquer.Entity.CidadeGasto;
-import com.conquer.Service.RelatorioCidadeGastoService;
+import com.conquer.model.Cidade;
+import com.conquer.service.CidadeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Calendar;
+import java.util.List;
 
-@RestController
+@Controller
 public class RelatorioCidadeGastoController {
 
     @Autowired
-    RelatorioCidadeGastoService relatorioCidadeGastoService;
+    private CidadeServiceImpl cidadeService;
 
-    @RequestMapping("/api/relatorio-gastos")
-    public RelatorioCidadeGastoDTO getMarsReport(
-            @RequestParam(value = "mes_ano_inicial") String mesAnoInicial,
-            @RequestParam(value = "mes_ano_final") String mesAnoFinal) {
-        return relatorioCidadeGastoService.getRelatorioCidadeGastoService(mesAnoInicial, mesAnoFinal);
+    @GetMapping("/relatorio-cidade-gasto")
+    public ResponseEntity getRelatorioCidadeGasto() {
+        List<Cidade> cidades = cidadeService.findAll();
+        ResponseEntity response = ResponseEntity.ok().body(cidades);
+        return response;
     }
 }
