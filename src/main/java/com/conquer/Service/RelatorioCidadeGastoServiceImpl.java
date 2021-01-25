@@ -126,10 +126,9 @@ public class RelatorioCidadeGastoServiceImpl implements RelatorioCidadeGastoServ
                 logger.info("Exchange: HEADERS: " + entity.toString() + " URL:" + url);
                 ResponseEntity<String> extratoCartaoRE = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
                 ExtratoCartao[] arrayExtratoCartao = mapper.readValue(extratoCartaoRE.getBody(), ExtratoCartao[].class);
-                if (arrayExtratoCartao.length > 0) {
-                    listaExtratoCartao.addAll(Arrays.asList(arrayExtratoCartao));
-                    pagina++;
-                } else {
+                listaExtratoCartao.addAll(Arrays.asList(arrayExtratoCartao));
+                pagina ++;
+                if (arrayExtratoCartao.length != 15) {
                     aindaHaRegistros = false;
                 }
             } catch (Exception e) {
