@@ -16,10 +16,13 @@ import org.springframework.web.client.RestTemplate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class RelatorioCidadeGastoServiceImpl implements RelatorioCidadeGastoService {
+
+    public static Logger logger=Logger.getLogger("RelatorioCidadeGastoService");
 
     @Autowired
     private CidadeGastoRepository repository;
@@ -46,10 +49,16 @@ public class RelatorioCidadeGastoServiceImpl implements RelatorioCidadeGastoServ
 //            e.setEstabelecimento(ee);
 //            List<ExtratoCartao> listaExtratoCartao = Collections.singletonList(e);
 
+            List<CidadeGasto> listaCidadeGasto = persistirExtrato(listaExtratoCartao);
+
+            Map<Cidade, Double> groupByCidade =
+                    listaCidadeGasto.stream().collect(
+                            Collectors.groupingBy(CidadeGasto::getCidade, Collectors.summingDouble(CidadeGasto::getValor)));
 
             List<RelatorioCidadeGastoDetalheDTO> cidades = new ArrayList<RelatorioCidadeGastoDetalheDTO>();
+            groupByCidade.forEach((k,v) -> cidades.add(new RelatorioCidadeGastoDetalheDTO(k.getNome(),v)));
 
-            List<CidadeGasto> listaCidadeGasto = persistirExtrato(listaExtratoCartao);
+            relatorio.setCidades(cidades);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,17 +66,29 @@ public class RelatorioCidadeGastoServiceImpl implements RelatorioCidadeGastoServ
         return relatorio;
     }
 
+    /**
+     * Persiste em banco a lista retornada da API
+     * @param listaExtratoCartao : List<ExtratoCartao>
+     * @return List<CidadeGasto>
+     * @throws ParseException
+     */
     private List<CidadeGasto> persistirExtrato(List<ExtratoCartao> listaExtratoCartao) throws ParseException {
         List<CidadeGasto> listaCidadeGasto = new ArrayList<CidadeGasto>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         for (ExtratoCartao extrato : listaExtratoCartao) {
-            Double valor = Double.valueOf(extrato.getValorTransacao().replace(".","").replace(",","."));
+            Double valor = Double.valueOf(extrato.getValorTransacao()
+                    .replace(".","")
+                    .replace(",","."));
+
             CidadeGasto cidadeGasto = new CidadeGasto(
                     Long.valueOf(extrato.getId()),
                     sdf.parse(extrato.getDataTransacao()),
-                    new Cidade(Long.valueOf(extrato.getEstabelecimento().getMunicipio().getCodigoIBGE())),
+                    new Cidade(
+                            Long.valueOf(extrato.getEstabelecimento().getMunicipio().getCodigoIBGE()),
+                            extrato.getEstabelecimento().getMunicipio().getNomeIBGE()
+                    ),
                     valor
             );
             repository.save(cidadeGasto);
@@ -102,7 +123,7 @@ public class RelatorioCidadeGastoServiceImpl implements RelatorioCidadeGastoServ
                     +"&pagina=" + pagina;
 
             try {
-
+                logger.info("Exchange: HEADERS: " + entity.toString() + " URL:" + url);
                 ResponseEntity<String> extratoCartaoRE = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
                 ExtratoCartao[] arrayExtratoCartao = mapper.readValue(extratoCartaoRE.getBody(), ExtratoCartao[].class);
                 if (arrayExtratoCartao.length > 0) {

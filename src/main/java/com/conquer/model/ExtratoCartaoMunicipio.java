@@ -7,5 +7,6 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExtratoCartaoMunicipio {
     private String codigoIBGE;
+    private String nomeIBGE;
     
 }

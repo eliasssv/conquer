@@ -1,5 +1,6 @@
 package com.conquer.controller;
 
+import com.conquer.dto.RelatorioCidadeGastoDTO;
 import com.conquer.service.RelatorioCidadeGastoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +23,7 @@ public class RelatorioCidadeGastoController {
             @RequestParam(value = "data_inicial") String dataInicial,
             @RequestParam(value = "data_final") String dataFinal
     ) throws ParseException {
-        relatorioCidadeGastoService.getRelatorioCidadeGasto(dataInicial,dataFinal);
-        return null;
+        RelatorioCidadeGastoDTO relatorioCidadeGastoDTO = relatorioCidadeGastoService.getRelatorioCidadeGasto(dataInicial,dataFinal);
+        return ResponseEntity.ok().body(relatorioCidadeGastoDTO);
     }
 }

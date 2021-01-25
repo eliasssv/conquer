@@ -19,7 +19,8 @@ public class Cidade {
     private String nome;
     private String uf;
 
-    public Cidade(Long id) {
+    public Cidade(Long id, String nome) {
         this.id = id;
+        this.nome = nome;
     }
 }
