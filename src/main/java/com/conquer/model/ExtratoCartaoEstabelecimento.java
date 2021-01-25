@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExtratoCartaoMunicipio {
-    private String codigoIBGE;
-    
+public class ExtratoCartaoEstabelecimento {
+    private ExtratoCartaoMunicipio municipio;
 }

@@ -12,13 +12,15 @@ create table tb_cidade(
 
 create table tb_cidade_gasto(
 	id integer primary key auto_increment,
-	id_cidade integer not null,
+	data date not null,
+	cidade_id integer not null,
 	valor numeric(16,2) not null
 );
 
-ALTER TABLE conquer.tb_cidade_gasto ADD CONSTRAINT tb_cidade_gasto_FK FOREIGN KEY (id_cidade) REFERENCES conquer.tb_cidade(id);
+ALTER TABLE conquer.tb_cidade_gasto ADD CONSTRAINT tb_cidade_gasto_FK FOREIGN KEY (cidade_id) REFERENCES conquer.tb_cidade(id);
 
-INSERT INTO conquer.tb_cidade (id,nome,uf) VALUES
+INSERT INTO conquer.tb_cidade (id,nome,uf) values
+(-1,'SEM INFORMAÇÃO','DF'),
 (1100015,'ALTA FLORESTA D OESTE','RO'),
 (1100379,'ALTO ALEGRE DOS PARECIS','RO'),
 (1100403,'ALTO PARAÍSO','RO'),

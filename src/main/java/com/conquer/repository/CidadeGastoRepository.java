@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface CidadeGastoRepository extends JpaRepository<CidadeGasto, Long> {
 
-    @Query("SELECT cg FROM CidadeGasto p WHERE data between :dataInicial and :dataFinal ")
+    @Query("SELECT cg FROM CidadeGasto cg WHERE data between :dataInicial and :dataFinal ")
     List<CidadeGasto> getByFilter(
             @Param("dataInicial") Date dataInicial,
             @Param("dataFinal") Date dataFinal
