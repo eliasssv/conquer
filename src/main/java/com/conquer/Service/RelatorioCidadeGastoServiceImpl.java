@@ -2,9 +2,7 @@ package com.conquer.service;
 
 import com.conquer.dto.RelatorioCidadeGastoDTO;
 import com.conquer.dto.RelatorioCidadeGastoDetalheDTO;
-import com.conquer.model.Cidade;
-import com.conquer.model.CidadeGasto;
-import com.conquer.model.ExtratoCartao;
+import com.conquer.model.*;
 import com.conquer.repository.CidadeGastoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,19 +33,20 @@ public class RelatorioCidadeGastoServiceImpl implements RelatorioCidadeGastoServ
         relatorio.setDataFinal(dataFinal);
 
         try {
-            List<ExtratoCartao> listaExtratoCartao = getListaExtratoCartao(dataInicial, dataFinal);
+//            List<ExtratoCartao> listaExtratoCartao = getListaExtratoCartao(dataInicial, dataFinal);
 
             //Apenas para testes
-//            ExtratoCartao e = new ExtratoCartao();
-//            e.setValorTransacao("1.000,00");
-//            e.setDataTransacao("10/01/2020");
-//            e.setId("12311231");
-//            ExtratoCartaoEstabelecimento ee = new ExtratoCartaoEstabelecimento();
-//            ExtratoCartaoMunicipio m = new ExtratoCartaoMunicipio();
-//            m.setCodigoIBGE("1302603");
-//            ee.setMunicipio(m);
-//            e.setEstabelecimento(ee);
-//            List<ExtratoCartao> listaExtratoCartao = Collections.singletonList(e);
+            ExtratoCartao e = new ExtratoCartao();
+            e.setValorTransacao("1.000,0021213213");
+            e.setDataTransacao("10/01/2020");
+            e.setId("12311231");
+            ExtratoCartaoEstabelecimento ee = new ExtratoCartaoEstabelecimento();
+            ExtratoCartaoMunicipio m = new ExtratoCartaoMunicipio();
+            m.setCodigoIBGE("1302603");
+            m.setNomeIBGE("CURITIBA");
+            ee.setMunicipio(m);
+            e.setEstabelecimento(ee);
+            List<ExtratoCartao> listaExtratoCartao = Collections.singletonList(e);
 
             List<CidadeGasto> listaCidadeGasto = persistirExtrato(listaExtratoCartao);
 

@@ -1,0 +1,16 @@
+body { 
+	font-family: Ubuntu, sans-serif; 
+}
+
+table {
+    width: 75%;
+}
+
+td {
+    width: 30%;
+    text-align: left;
+}
+
+th {
+    text-align: left !important;
+}
