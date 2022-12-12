@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RelatorioCidadeGastoDetalheDTO {
-    private String nomeCidade;
-    private Double valor;
+public class ReportCityExpensesDetailDTO {
+    private String cityName;
+    private Double value;
 }

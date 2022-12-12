@@ -4,22 +4,22 @@ use conquer;
 CREATE USER 'conquer'@'localhost' IDENTIFIED BY 'conquer';
 GRANT ALL PRIVILEGES ON conquer. * TO 'conquer'@'localhost';
 
-create table tb_cidade(
+create table tb_city(
 	id integer primary key,
-	nome varchar(100) not null,
+	name varchar(100) not null,
 	uf varchar(2) not null
 );
 
-create table tb_cidade_gasto(
+create table tb_city_expenses(
 	id integer primary key auto_increment,
-	data date not null,
-	cidade_id integer not null,
-	valor numeric(16,2) not null
+	date date not null,
+	city_id integer not null,
+	value numeric(16,2) not null
 );
 
-ALTER TABLE conquer.tb_cidade_gasto ADD CONSTRAINT tb_cidade_gasto_FK FOREIGN KEY (cidade_id) REFERENCES conquer.tb_cidade(id);
+ALTER TABLE conquer.tb_city_expenses ADD CONSTRAINT tb_city_expenses_FK FOREIGN KEY (city_id) REFERENCES conquer.tb_city(id);
 
-INSERT INTO conquer.tb_cidade (id,nome,uf) values
+INSERT INTO conquer.tb_city (id,name,uf) values
 (-1,'SEM INFORMAÇÃO','DF'),
 (1100015,'ALTA FLORESTA D OESTE','RO'),
 (1100379,'ALTO ALEGRE DOS PARECIS','RO'),

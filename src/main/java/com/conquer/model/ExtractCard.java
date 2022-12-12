@@ -1,13 +1,15 @@
 package com.conquer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExtratoCartao {
+public class ExtractCard {
     private String id;
-    private String dataTransacao;
-    private String valorTransacao;
-    private ExtratoCartaoEstabelecimento estabelecimento;
+    private String date;
+    private String value;
+    private ExtractCardPlace place;
 }
